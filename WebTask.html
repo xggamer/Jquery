@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <style type="text/css">
+        div ul li
+        {
+            border: solid;
+            border-radius: 10px;
+            display: inline;
+            font-size: 18px;
+        }
+
+        #div1, #div2
+        {
+            margin-left: 40%;
+        }
+
+        .Hide
+        {
+            display: none;
+        }
+
+        .Show
+        {
+            display: normal;
+        }
+    </style>
+    <title>xggamer</title>
+</head>
+<body>
+    <div id="div1">
+        <ul>
+            <li id="tab1" data-id="t1">Tab1</li>
+            <li id="tab2" data-id="t2">Tab2</li>
+            <li id="tab3" data-id="t3">Tab3</li>
+            <li id="tab4" data-id="t4">Tab4</li>
+        </ul>
+    </div>
+    <div id="div2" style="border: solid; margin-right: 40%">
+        <div id="t1" class="Show" data-next="t2">
+            <p>Hello I am tab1</p>
+        </div>
+        <div id="t2" class="Hide" data-next="t3" data-prev="t1">
+            <p>Hello I am tab2</p>
+        </div>
+        <div id="t3" class="Hide" data-next="t4" data-prev="t2">
+            <p>Hello I am tab3</p>
+        </div>
+        <div id="t4" class="Hide" data-prev="t3">
+            <p>Hello I am tab4</p>
+        </div>
+    </div>
+    <script src="jquery-1.8.2.min.js"></script>
+    <script src="jquery.mobile-1.4.5.min.js"></script>
+    <script type="text/javascript">
+        $('#div1 ul li').on('click', function () {
+            html = $('.Show').attr('id');
+            $('#' + html).fadeOut();
+            $('#' + html).removeClass('Show');
+            tab = $(this).data('id');
+            $('#' + tab).fadeIn();
+           // $('#' + tab).removeClass('Hide');
+            $('#' + tab).addClass('Show');
+        });
+        $('#div2').on('swipeleft', function () {
+            Move('next');
+
+        });
+        $('#div2').on('swiperight', function () {
+            Move('prev');
+
+        });
+        function Move(direction)
+        {
+            html = $('.Show').attr('id');
+            check = $('#' + html).data(direction);
+            if ($('#' + check).val().length < 5) {
+                $('#' + html).fadeOut();
+                $('#' + html).removeClass('Show');
+                $('#' + $('#' + html).data(direction)).fadeIn();
+                $('#' + $('#' + html).data(direction)).addClass('Show');
+            }
+        }
+    </script>
+</body>
+</html>
